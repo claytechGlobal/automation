@@ -36,17 +36,32 @@ module.exports = async function handler(req, res) {
     return;
   }
 
+  const firstName = String(body.firstName || '').trim();
+  const lastName = String(body.lastName || '').trim();
+  const phoneRaw = String(body.phone || '').trim();
+  const phoneDigits = phoneRaw.replace(/[^\d+]/g, '');
+  const type = body.type || 'lead';
+  const source = body.source || 'website';
+  const fullName = String(body.fullName || '').trim();
+  const tradingExperience = String(body.tradingExperience || '').trim();
+  const tradingCapital = String(body.tradingCapital || '').trim();
+  const commitment = String(body.commitment || '').trim();
+
   const payload = {
-    type: body.type || 'lead',
-    source: body.source || 'website',
-    fullName: String(body.fullName || '').trim(),
-    firstName: String(body.firstName || '').trim(),
-    lastName: String(body.lastName || '').trim(),
+    type,
+    source,
+    fullName,
+    firstName,
+    lastName,
+    first_name: firstName,
+    last_name: lastName,
     email,
-    phone: String(body.phone || '').trim(),
-    tradingExperience: String(body.tradingExperience || '').trim(),
-    tradingCapital: String(body.tradingCapital || '').trim(),
-    commitment: String(body.commitment || '').trim()
+    Email: email,
+    phone: phoneDigits || phoneRaw,
+    Phone: phoneDigits || phoneRaw,
+    tradingExperience,
+    tradingCapital,
+    commitment
   };
 
   const r = await fetch(url, {
