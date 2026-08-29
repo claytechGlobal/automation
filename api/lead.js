@@ -39,7 +39,14 @@ module.exports = async function handler(req, res) {
   const firstName = String(body.firstName || '').trim();
   const lastName = String(body.lastName || '').trim();
   const phoneRaw = String(body.phone || '').trim();
-  const phoneDigits = phoneRaw.replace(/[^\d+]/g, '');
+  const digits = phoneRaw.replace(/[^\d]/g, '');
+  let phone = phoneRaw;
+  if (digits.startsWith('92') && digits.length >= 12) phone = '+' + digits;
+  else if (digits.startsWith('0') && digits.length === 11) phone = '+92' + digits.slice(1);
+  else if (digits.length === 10 && digits.startsWith('3')) phone = '+92' + digits;
+  else if (digits.length === 11 && digits.startsWith('1')) phone = '+' + digits;
+  else if (digits.length === 10) phone = '+1' + digits;
+  else if (digits.length > 0) phone = '+' + digits;
   const type = body.type || 'lead';
   const source = body.source || 'website';
   const fullName = String(body.fullName || '').trim();
@@ -55,10 +62,12 @@ module.exports = async function handler(req, res) {
     lastName,
     first_name: firstName,
     last_name: lastName,
+    'First Name': firstName,
+    'Last Name': lastName,
     email,
     Email: email,
-    phone: phoneDigits || phoneRaw,
-    Phone: phoneDigits || phoneRaw,
+    phone,
+    Phone: phone,
     tradingExperience,
     tradingCapital,
     commitment
