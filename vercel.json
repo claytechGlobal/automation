@@ -1,3 +1,6 @@
 {
-  "cleanUrls": true
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/images/:path*", "destination": "/public/images/:path*" }
+  ]
 }
