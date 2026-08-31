@@ -1,6 +1,5 @@
 {
-  "cleanUrls": true,
   "rewrites": [
-    { "source": "/images/:path*", "destination": "/public/images/:path*" }
+    { "source": "/api/(.*)", "destination": "/api/$1" }
   ]
 }
