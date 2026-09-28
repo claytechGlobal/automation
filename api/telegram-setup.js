@@ -25,7 +25,7 @@ module.exports = async function handler(req, res) {
 
   const payload = {
     url: webhookUrl,
-    allowed_updates: ['chat_member', 'my_chat_member', 'message'],
+    allowed_updates: ['message'],
     drop_pending_updates: true
   };
   if (secret) payload.secret_token = secret;
