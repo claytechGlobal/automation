@@ -40,7 +40,7 @@ async function main() {
   const publicDir = path.join(root, 'public');
   if (fs.existsSync(publicDir)) copyDir(publicDir, dist);
 
-  for (const file of ['privacy.html', 'terms.html']) {
+  for (const file of ['privacy.html', 'terms.html', 'risk.html']) {
     const src = path.join(root, file);
     if (fs.existsSync(src)) fs.copyFileSync(src, path.join(dist, file));
   }
