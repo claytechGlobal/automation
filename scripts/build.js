@@ -4,6 +4,7 @@ const path = require('path');
 const root = path.join(__dirname, '..');
 const dist = path.join(root, 'dist');
 const CHANNEL = 'https://t.me/+FsBptMvmAD0zMGJh';
+const SITE_OFFLINE = true;
 
 async function joinHref() {
   const token = process.env.TELEGRAM_BOT_TOKEN;
@@ -40,9 +41,17 @@ async function main() {
   const publicDir = path.join(root, 'public');
   if (fs.existsSync(publicDir)) copyDir(publicDir, dist);
 
-  for (const file of ['privacy.html', 'terms.html', 'risk.html']) {
+  for (const file of ['privacy.html', 'terms.html', 'risk.html', 'offline.html']) {
     const src = path.join(root, file);
     if (fs.existsSync(src)) fs.copyFileSync(src, path.join(dist, file));
+  }
+
+  if (SITE_OFFLINE) {
+    const offline = fs.readFileSync(path.join(root, 'offline.html'));
+    for (const file of ['index.html', 'privacy.html', 'terms.html', 'risk.html']) {
+      fs.writeFileSync(path.join(dist, file), offline);
+    }
+    console.log('Site is OFFLINE');
   }
 
   console.log('Join button -> ' + href);
