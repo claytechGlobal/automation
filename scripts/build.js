@@ -4,7 +4,7 @@ const path = require('path');
 const root = path.join(__dirname, '..');
 const dist = path.join(root, 'dist');
 const CHANNEL = 'https://t.me/+FsBptMvmAD0zMGJh';
-const SITE_OFFLINE = true;
+const SITE_OFFLINE = false;
 
 async function joinHref() {
   const token = process.env.TELEGRAM_BOT_TOKEN;
